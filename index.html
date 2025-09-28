@@ -10,12 +10,13 @@
     <style>
         /* Global Reset and Typography */
         :root {
-            --accent-color: #007bff; /* Vibrant Blue for the timeline dots */
+            --accent-color: #1a237e; /* Dark Blue for the central line and years */
+            --highlight-color: #007bff; /* Bright Blue for emphasis */
             --text-color: #333;
             --secondary-text-color: #555;
             --background-color: #f8f9fa;
             --card-bg: #ffffff;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
         * {
             box-sizing: border-box;
@@ -32,7 +33,7 @@
 
         /* Main Container for Fluidity */
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: auto;
             padding: 20px;
         }
@@ -40,86 +41,173 @@
         /* Header and Hook */
         .header {
             text-align: center;
-            margin-bottom: 40px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #ddd;
+            margin-bottom: 50px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--highlight-color);
         }
         .header h1 {
-            font-size: 2.2em;
-            color: var(--text-color);
+            font-size: 2.5em;
+            color: var(--accent-color);
             margin-bottom: 10px;
         }
         .header p {
-            font-size: 1.1em;
+            font-size: 1.2em;
             color: var(--secondary-text-color);
         }
 
-        /* Timeline Styles */
+        /* Timeline Styles (Main Structure) */
         .timeline {
             position: relative;
-            padding-left: 30px; /* Space for the line and dots */
+            margin: 0 auto;
+            max-width: 800px;
         }
         
-        /* The main vertical line */
-        .timeline::before {
+        /* The Central Vertical Line */
+        .timeline::after {
             content: '';
             position: absolute;
+            width: 4px;
+            background-color: var(--accent-color);
             top: 0;
-            left: 10px;
-            width: 2px;
-            height: 100%;
-            background-color: #ccc;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+            z-index: 0;
         }
 
-        /* Individual Timeline Item */
+        /* Individual Timeline Item Container */
         .timeline-item {
-            margin-bottom: 30px;
+            padding: 10px 0;
             position: relative;
-            background: var(--card-bg);
-            padding: 20px;
+            width: 50%;
+            z-index: 1;
+        }
+
+        /* Timeline Content Card */
+        .timeline-content {
+            padding: 20px 25px;
+            background-color: var(--card-bg);
+            position: relative;
             border-radius: 8px;
             box-shadow: var(--shadow);
-            border-left: 4px solid var(--accent-color); /* Emphasize the entry */
         }
-
-        /* The timeline dot/marker */
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -15px; /* Aligns dot with the vertical line */
-            top: 25px;
-            width: 20px;
-            height: 20px;
-            background-color: var(--accent-color);
-            border: 4px solid var(--background-color); /* Creates a cutout effect */
-            border-radius: 50%;
-            z-index: 1; /* Ensures dot sits above the line */
-        }
-
-        .timeline-item h3 {
-            font-size: 1.4em;
-            color: var(--accent-color);
-            margin-bottom: 5px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
+        
+        /* The Year Marker (Center Dot) */
         .timeline-item .year {
+            background-color: var(--accent-color);
+            color: white;
             font-weight: 700;
-            font-size: 0.9em;
-            color: #777;
-            background: #e9ecef;
-            padding: 4px 8px;
+            padding: 8px 12px;
+            border-radius: 50%;
+            width: 85px; /* Slightly larger marker */
+            height: 85px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 2; 
+            font-size: 1.2em; /* Larger year text */
+            box-shadow: 0 0 0 8px var(--background-color); /* Thicker border effect */
+        }
+        
+        /* LEFT SIDE ITEMS (Odd) */
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            padding-right: 50px; /* Space for the central axis */
+        }
+        .timeline-item:nth-child(odd) .timeline-content {
+            border-left: 4px solid var(--highlight-color);
+            text-align: right; /* Align content to the right edge of the left column */
+        }
+        .timeline-item:nth-child(odd) .year {
+            right: -42.5px; /* Position year marker to the right side of the left item (Half the size of the year marker) */
+        }
+        .timeline-item:nth-child(odd) .company-logo-container {
+            justify-content: flex-end; /* Push logo/name to the right */
+        }
+        .timeline-item:nth-child(odd) .company-logo {
+            margin-left: 10px;
+            margin-right: 0;
+        }
+
+        /* RIGHT SIDE ITEMS (Even) */
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            padding-left: 50px; /* Space for the central axis */
+        }
+        .timeline-item:nth-child(even) .timeline-content {
+            border-right: 4px solid var(--highlight-color);
+            text-align: left;
+        }
+        .timeline-item:nth-child(even) .year {
+            left: -42.5px; /* Position year marker to the left side of the right item (Half the size of the year marker) */
+        }
+        .timeline-item:nth-child(even) .company-logo-container {
+            justify-content: flex-start;
+        }
+        
+        /* Common Content Styling */
+        .timeline-content h3 {
+            font-size: 1.3em;
+            color: var(--highlight-color);
+            margin-bottom: 5px;
+        }
+        .timeline-content p {
+            font-size: 0.95em;
+        }
+        .company-logo-container {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+        }
+        .company-logo {
+            width: 30px;
+            height: 30px;
             border-radius: 4px;
+            object-fit: contain;
+        }
+        
+        /* Mobile View: Stack everything centrally */
+        @media screen and (max-width: 600px) {
+            .timeline::after {
+                left: 20px; /* Move central line to the far left */
+            }
+            .timeline-item {
+                width: 100%; /* Take full width */
+                padding-left: 50px; /* Create space for line and marker on the left */
+                padding-right: 10px;
+                left: 0 !important; /* Force all items to the left */
+            }
+            /* Reset odd/even specific overrides for mobile */
+            .timeline-item:nth-child(odd),
+            .timeline-item:nth-child(even) {
+                padding-right: 10px;
+                padding-left: 50px;
+            }
+            .timeline-item:nth-child(even) .timeline-content,
+            .timeline-item:nth-child(odd) .timeline-content {
+                text-align: left; /* Align all text left */
+                border-right: none;
+                border-left: 4px solid var(--highlight-color);
+            }
+            .timeline-item .year {
+                left: 0; /* Align year marker with the new central line */
+                right: auto;
+                transform: translate(-50%, -50%); /* Move the center dot to the left line */
+            }
+            .timeline-item:nth-child(even) .company-logo-container,
+            .timeline-item:nth-child(odd) .company-logo-container {
+                justify-content: flex-start;
+            }
+            .timeline-item:nth-child(odd) .company-logo {
+                margin-right: 10px;
+                margin-left: 0;
+            }
         }
 
-        .timeline-item p {
-            color: var(--secondary-text-color);
-            margin-top: 10px;
-        }
-
-        /* Motivational Section */
+        /* Call to Action */
         .cta-section {
             text-align: center;
             margin-top: 40px;
@@ -134,7 +222,7 @@
         }
         .cta-section .cta-button {
             display: inline-block;
-            background-color: #ffc107; /* Bright, high-contrast button */
+            background-color: #ffc107; 
             color: var(--text-color);
             padding: 12px 25px;
             text-decoration: none;
@@ -144,19 +232,6 @@
         }
         .cta-section .cta-button:hover {
             background-color: #ffecb3;
-        }
-        
-        /* Mobile adjustment: Reduce padding on very small screens */
-        @media (max-width: 400px) {
-            .container {
-                padding: 10px;
-            }
-            .timeline-item {
-                padding: 15px;
-            }
-            .timeline-item::before {
-                top: 20px;
-            }
         }
 
     </style>
@@ -171,46 +246,148 @@
 
         <div class="timeline">
             
+            <!-- 9. MOST RECENT EXPERIENCE (2024) -->
             <div class="timeline-item">
-                <h3>Cloudera <span class="year">2024</span></h3>
-                <p>
-                    **Accelerated Growth & Future Vision:** Currently focused on developing bleeding-edge solutions in [Mention a core skill for your course, e.g., Cloud Data Engineering]. This is where the newest, most valuable content in your course originates.
-                </p>
-            </div>
-
-            <div class="timeline-item">
-                <h3>Microsoft <span class="year">2020 - 2024</span></h3>
-                <p>
-                    **Scaling & Architecture:** Led the architecture team for a major enterprise platform. Learned how to build robust, secure, and scalable systems from the ground up—the exact principles we cover in Module 3.
-                </p>
-            </div>
-
-            <div class="timeline-item">
-                <h3>Expedia <span class="year">2019 - 2020</span></h3>
-                <p>
-                    **High-Traffic Optimization:** Deep dive into performance and user experience under massive traffic loads. This experience shaped the efficiency and optimization hacks I'll share with you.
-                </p>
-            </div>
-
-            <div class="timeline-item">
-                <h3>Paytm <span class="year">2018 - 2019</span></h3>
-                <p>
-                    **Rapid Innovation & FinTech:** Worked in a high-pressure, fast-paced environment where quick iterations were essential. Developed the rapid prototyping strategies you will use to build your portfolio.
-                </p>
-            </div>
-
-            <div class="timeline-item">
-                <h3>Adobe <span class="year">2016 - 2018</span></h3>
-                <p>
-                    **The Foundation:** My entry point into the industry. Gained core fundamental skills and learned the *wrong* way to approach many problems—which is why I built a better curriculum for you.
-                </p>
+                <span class="year">2024</span>
+                <div class="timeline-content">
+                    <h3>
+                        <span class="company-logo-container">
+                            <img src="https://placehold.co/50x50/3cb371/ffffff?text=CD" alt="Cloudera Logo" class="company-logo">
+                            Cloudera
+                        </span>
+                    </h3>
+                    <p>
+                        **Accelerated Growth & Future Vision:** Currently focused on developing bleeding-edge solutions in [Mention a core skill for your course, e.g., Cloud Data Engineering]. This is where the newest, most valuable content in your course originates.
+                    </p>
+                </div>
             </div>
             
+            <!-- 8. PROFESSIONAL EXPERIENCE (2020) -->
             <div class="timeline-item">
-                <h3>[Your Qualification/Education] <span class="year">Pre-2016</span></h3>
-                <p>
-                    **Formal Training & Early Hustle:** Established the theoretical knowledge base necessary to even land the Adobe role. The perfect starting point for any career transformation.
-                </p>
+                <span class="year">2020</span>
+                <div class="timeline-content">
+                    <h3>
+                        <span class="company-logo-container">
+                            <img src="https://placehold.co/50x50/f25022/ffffff?text=MS" alt="Microsoft Logo" class="company-logo">
+                            Microsoft
+                        </span>
+                    </h3>
+                    <p>
+                        **Scaling & Architecture:** Led the architecture team for a major enterprise platform. Learned how to build robust, secure, and scalable systems from the ground up—the exact principles we cover in Module 3.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 7. PROFESSIONAL EXPERIENCE (2019) -->
+            <div class="timeline-item">
+                <span class="year">2019</span>
+                <div class="timeline-content">
+                    <h3>
+                        <span class="company-logo-container">
+                            <img src="https://placehold.co/50x50/003366/ffffff?text=EX" alt="Expedia Logo" class="company-logo">
+                            Expedia
+                        </span>
+                    </h3>
+                    <p>
+                        **High-Traffic Optimization:** Deep dive into performance and user experience under massive traffic loads. This experience shaped the efficiency and optimization hacks I'll share with you.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 6. PROFESSIONAL EXPERIENCE (2018) -->
+            <div class="timeline-item">
+                <span class="year">2018</span>
+                <div class="timeline-content">
+                    <h3>
+                        <span class="company-logo-container">
+                            <img src="https://placehold.co/50x50/00b9f1/ffffff?text=PT" alt="Paytm Logo" class="company-logo">
+                            Paytm
+                        </span>
+                    </h3>
+                    <p>
+                        **Rapid Innovation & FinTech:** Worked in a high-pressure, fast-paced environment where quick iterations were essential. Developed the rapid prototyping strategies you will use to build your portfolio.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 5. PROFESSIONAL EXPERIENCE (2016) -->
+            <div class="timeline-item">
+                <span class="year">2016</span>
+                <div class="timeline-content">
+                    <h3>
+                        <span class="company-logo-container">
+                            <img src="https://placehold.co/50x50/ff0000/ffffff?text=AD" alt="Adobe Logo" class="company-logo">
+                            Adobe
+                        </span>
+                    </h3>
+                    <p>
+                        **The Foundation:** My entry point into the industry. Gained core fundamental skills and learned the *wrong* way to approach many problems—which is why I built a better curriculum for you.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- 4. EDUCATION/QUALIFICATION (Pre-2016) -->
+            <div class="timeline-item">
+                <span class="year">EDU</span>
+                <div class="timeline-content">
+                    <h3>
+                        <span class="company-logo-container">
+                            <img src="https://placehold.co/50x50/808080/ffffff?text=QUAL" alt="Qualification Icon" class="company-logo">
+                            Formal Qualification
+                        </span>
+                    </h3>
+                    <p>
+                        **The Academic Blueprint:** Completed my B.Tech/M.Tech. Established the theoretical knowledge base necessary to even land the first major role.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 3. EDUCATION (2011) -->
+            <div class="timeline-item">
+                <span class="year">2011</span>
+                <div class="timeline-content">
+                    <h3>
+                        <span class="company-logo-container">
+                            <img src="https://placehold.co/50x50/808080/ffffff?text=12th" alt="School Icon" class="company-logo">
+                            Completed 12th Grade
+                        </span>
+                    </h3>
+                    <p>
+                        **The Path Decision:** Completed senior secondary education, laying the groundwork for engineering/technical studies and future specialization.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 2. EDUCATION (2009) -->
+            <div class="timeline-item">
+                <span class="year">2009</span>
+                <div class="timeline-content">
+                    <h3>
+                        <span class="company-logo-container">
+                            <img src="https://placehold.co/50x50/808080/ffffff?text=10th" alt="School Icon" class="company-logo">
+                            Completed 10th Grade
+                        </span>
+                    </h3>
+                    <p>
+                        **Fundamental Skills:** Built a strong foundation in science and mathematics, essential prerequisites for a career in technology and engineering.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 1. BIRTH (1994) -->
+            <div class="timeline-item">
+                <span class="year">1994</span>
+                <div class="timeline-content">
+                    <h3>
+                        <span class="company-logo-container">
+                            <img src="https://placehold.co/50x50/808080/ffffff?text=BORN" alt="Birth Icon" class="company-logo">
+                            I Was Born
+                        </span>
+                    </h3>
+                    <p>
+                        **The Beginning of the Journey:** The start of a path that eventually led to the industry expertise shared in this course.
+                    </p>
+                </div>
             </div>
 
         </div>
