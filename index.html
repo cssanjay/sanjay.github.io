@@ -4,15 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sanjay's Journey: The Course Blueprint</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Using the Inter font for a clean, professional look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        /* 1. Global & Reset */
+        /* Global Reset and Typography */
         :root {
-            --primary-color: #007bff; /* Blue for accent/motivation */
-            --background-color: #f4f7f6;
+            --accent-color: #007bff; /* Vibrant Blue for the timeline dots */
             --text-color: #333;
-            --card-background: #ffffff;
-            --header-color: #1a237e; /* Darker blue for authority */
+            --secondary-text-color: #555;
+            --background-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
         * {
             box-sizing: border-box;
@@ -20,270 +23,205 @@
             padding: 0;
         }
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter', sans-serif;
             line-height: 1.6;
             color: var(--text-color);
             background-color: var(--background-color);
             padding: 20px;
         }
 
-        /* 2. Layout Containers */
+        /* Main Container for Fluidity */
         .container {
-            max-width: 1100px;
+            max-width: 800px;
             margin: auto;
+            padding: 20px;
         }
 
-        /* 3. Header & Hook */
-        .hero {
+        /* Header and Hook */
+        .header {
             text-align: center;
-            padding: 40px 20px;
-            margin-bottom: 30px;
-            background-color: var(--header-color);
-            color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            margin-bottom: 40px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ddd;
         }
-        .hero h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-        .hero p {
-            font-size: 1.2em;
-            font-weight: 300;
-        }
-
-        /* 4. Main Content Grid (Non-Responsive -> Responsive) */
-        .main-content {
-            display: grid;
-            grid-template-columns: 1fr; /* Default to single column for mobile */
-            gap: 30px;
-        }
-
-        /* Profile Sidebar */
-        .profile-card {
-            background: var(--card-background);
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        .profile-img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 15px;
-            border: 4px solid var(--primary-color);
-        }
-        .profile-card h3 {
-            color: var(--primary-color);
-            margin-bottom: 5px;
-        }
-        .profile-card ul {
-            list-style: none;
-            text-align: left;
-            margin-top: 15px;
-            padding-left: 0;
-        }
-        .profile-card ul li {
-            padding: 5px 0;
-            border-bottom: 1px dashed #eee;
-        }
-
-        /* Experience & Journey Section */
-        .section {
-            background: var(--card-background);
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-        .section h2 {
-            color: var(--header-color);
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
-
-        /* Experience/Company Grid (Flexbox) */
-        .experience-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: space-between;
-        }
-        .company-item {
-            flex-basis: calc(50% - 10px); /* Two columns on desktop, stack on mobile */
-            padding: 15px;
-            border-left: 3px solid var(--primary-color);
-        }
-        .company-item h4 {
-            margin-bottom: 5px;
+        .header h1 {
+            font-size: 2.2em;
             color: var(--text-color);
+            margin-bottom: 10px;
         }
-        .company-item p {
-            font-size: 0.9em;
-            color: #666;
+        .header p {
+            font-size: 1.1em;
+            color: var(--secondary-text-color);
         }
 
-        /* Motivational Journey Timeline */
-        .journey-timeline {
+        /* Timeline Styles */
+        .timeline {
             position: relative;
-            padding-left: 30px;
-            margin-top: 30px;
+            padding-left: 30px; /* Space for the line and dots */
         }
-        .journey-timeline::before {
+        
+        /* The main vertical line */
+        .timeline::before {
             content: '';
             position: absolute;
             top: 0;
             left: 10px;
             width: 2px;
             height: 100%;
-            background: #ccc;
-        }
-        .journey-point {
-            position: relative;
-            margin-bottom: 25px;
-            padding-left: 20px;
-        }
-        .journey-point::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 5px;
-            width: 20px;
-            height: 20px;
-            background: var(--primary-color);
-            border-radius: 50%;
-            border: 4px solid var(--card-background);
-        }
-        .journey-point h4 {
-            color: var(--primary-color);
-            font-weight: 600;
-        }
-        .journey-point p {
-            font-size: 0.95em;
+            background-color: #ccc;
         }
 
-        /* 5. Call to Action */
-        .cta {
-            text-align: center;
-            padding: 40px 20px;
-            background: var(--header-color);
-            color: #ffffff;
-            border-radius: 10px;
-            margin-top: 30px;
+        /* Individual Timeline Item */
+        .timeline-item {
+            margin-bottom: 30px;
+            position: relative;
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--accent-color); /* Emphasize the entry */
         }
-        .cta-button {
+
+        /* The timeline dot/marker */
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -15px; /* Aligns dot with the vertical line */
+            top: 25px;
+            width: 20px;
+            height: 20px;
+            background-color: var(--accent-color);
+            border: 4px solid var(--background-color); /* Creates a cutout effect */
+            border-radius: 50%;
+            z-index: 1; /* Ensures dot sits above the line */
+        }
+
+        .timeline-item h3 {
+            font-size: 1.4em;
+            color: var(--accent-color);
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .timeline-item .year {
+            font-weight: 700;
+            font-size: 0.9em;
+            color: #777;
+            background: #e9ecef;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .timeline-item p {
+            color: var(--secondary-text-color);
+            margin-top: 10px;
+        }
+
+        /* Motivational Section */
+        .cta-section {
+            text-align: center;
+            margin-top: 40px;
+            padding: 30px;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+        .cta-section h2 {
+            margin-bottom: 15px;
+        }
+        .cta-section .cta-button {
             display: inline-block;
-            background: #ffc107; /* Bright, attractive color */
+            background-color: #ffc107; /* Bright, high-contrast button */
             color: var(--text-color);
             padding: 12px 25px;
             text-decoration: none;
-            font-size: 1.2em;
             font-weight: 700;
             border-radius: 5px;
-            transition: background 0.3s;
-            margin-top: 15px;
+            transition: background-color 0.3s;
         }
-        .cta-button:hover {
-            background: #ffecb3;
+        .cta-section .cta-button:hover {
+            background-color: #ffecb3;
+        }
+        
+        /* Mobile adjustment: Reduce padding on very small screens */
+        @media (max-width: 400px) {
+            .container {
+                padding: 10px;
+            }
+            .timeline-item {
+                padding: 15px;
+            }
+            .timeline-item::before {
+                top: 20px;
+            }
         }
 
-        /* 6. Media Query for Desktop Layout */
-        @media (min-width: 768px) {
-            .main-content {
-                grid-template-columns: 1fr 2fr; /* Sidebar (1 part) + Main Content (2 parts) */
-            }
-            .company-item {
-                flex-basis: calc(33.333% - 14px); /* Three columns on desktop */
-            }
-            .profile-card {
-                text-align: left; /* Align text left in the sidebar */
-            }
-            .profile-img {
-                float: left;
-                margin-right: 20px;
-            }
-        }
     </style>
 </head>
 <body>
     <div class="container">
-        <header class="hero">
-            <h1>Your Next Career Leap Starts Here.</h1>
-            <p>I spent 10 years mastering this system. Let me show you the shortcut in 30 minutes.</p>
-        </header>
-
-        <div class="main-content">
-            <section class="profile-card">
-                <img src="https://via.placeholder.com/150/007bff/ffffff?text=SANJAY" alt="Profile Picture" class="profile-img">
-                <h2>Sanjay [Your Last Name]</h2>
-                <p>Instructor & Consultant</p>
-
-                <h3>Core Qualifications</h3>
-                <ul>
-                    <li>✅ **B.Tech & M.Tech** - The Analytical Foundation</li>
-                    <li>✅ **[Your Key Certification]** - Certified Master in [Topic]</li>
-                    <li>✅ **10+ Years** - Industry Experience</li>
-                    <li>✅ **Mentored 500+** - Successful Students</li>
-                </ul>
-            </section>
-
-            <main>
-                <section class="section">
-                    <h2>The Systems I Built: My Top 5 Experiences</h2>
-                    <div class="experience-grid">
-                        <div class="company-item">
-                            <h4>Company 1 (The Scale)</h4>
-                            <p>Spearheaded a project that scaled the user base by 300% using the principles in our first module.</p>
-                        </div>
-                        <div class="company-item">
-                            <h4>Company 2 (The Failure)</h4>
-                            <p>My biggest mistake! Lost a key client, but learned **Lesson A**, which is now a crucial module in this course.</p>
-                        </div>
-                        <div class="company-item">
-                            <h4>Company 3 (The Efficiency)</h4>
-                            <p>Reduced operational costs by 40% through automation. I'll teach you the same efficiency hacks.</p>
-                        </div>
-                        <div class="company-item">
-                            <h4>Company 4 (The Innovation)</h4>
-                            <p>Developed a proprietary framework now widely used. This course is the refined, modern version of that framework.</p>
-                        </div>
-                        <div class="company-item">
-                            <h4>Company 5 (The Leadership)</h4>
-                            <p>Led a global, cross-functional team of 15. The course includes my best tips on team management & collaboration.</p>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="section">
-                    <h2>Your Fast-Track: From Struggle to Success</h2>
-                    <div class="journey-timeline">
-                        <div class="journey-point">
-                            <h4>Phase 1: The Hard Way (Where You Are Now)</h4>
-                            <p>Years spent struggling with confusing resources and outdated methods. This was slow, expensive, and frustrating.</p>
-                        </div>
-                        <div class="journey-point">
-                            <h4>Phase 2: The Breakthrough (The Course)</h4>
-                            <p>After a decade of trial and error, I reverse-engineered the perfect system. This course is that distilled knowledge.</p>
-                        </div>
-                        <div class="journey-point">
-                            <h4>Phase 3: Accelerated Mastery (Your Future)</h4>
-                            <p>You bypass the years of pain and go straight to execution, achieving results 5x faster than I did.</p>
-                        </div>
-                    </div>
-                </section>
-            </main>
+        
+        <div class="header">
+            <h1>Sanjay's Journey: Your Course Blueprint</h1>
+            <p>I mastered this craft over 8 years and five companies. My path is your fast-track to success.</p>
         </div>
 
-        <footer class="cta">
-            <h2>Ready to Transform Your Skills?</h2>
-            <p>Enroll today and let my 10 years of experience become your competitive advantage.</p>
-            <a href="#enrollment-link" class="cta-button">See the Full Course Details & Enroll Now</a>
-        </footer>
+        <div class="timeline">
+            
+            <div class="timeline-item">
+                <h3>Cloudera <span class="year">2024</span></h3>
+                <p>
+                    **Accelerated Growth & Future Vision:** Currently focused on developing bleeding-edge solutions in [Mention a core skill for your course, e.g., Cloud Data Engineering]. This is where the newest, most valuable content in your course originates.
+                </p>
+            </div>
+
+            <div class="timeline-item">
+                <h3>Microsoft <span class="year">2020 - 2024</span></h3>
+                <p>
+                    **Scaling & Architecture:** Led the architecture team for a major enterprise platform. Learned how to build robust, secure, and scalable systems from the ground up—the exact principles we cover in Module 3.
+                </p>
+            </div>
+
+            <div class="timeline-item">
+                <h3>Expedia <span class="year">2019 - 2020</span></h3>
+                <p>
+                    **High-Traffic Optimization:** Deep dive into performance and user experience under massive traffic loads. This experience shaped the efficiency and optimization hacks I'll share with you.
+                </p>
+            </div>
+
+            <div class="timeline-item">
+                <h3>Paytm <span class="year">2018 - 2019</span></h3>
+                <p>
+                    **Rapid Innovation & FinTech:** Worked in a high-pressure, fast-paced environment where quick iterations were essential. Developed the rapid prototyping strategies you will use to build your portfolio.
+                </p>
+            </div>
+
+            <div class="timeline-item">
+                <h3>Adobe <span class="year">2016 - 2018</span></h3>
+                <p>
+                    **The Foundation:** My entry point into the industry. Gained core fundamental skills and learned the *wrong* way to approach many problems—which is why I built a better curriculum for you.
+                </p>
+            </div>
+            
+            <div class="timeline-item">
+                <h3>[Your Qualification/Education] <span class="year">Pre-2016</span></h3>
+                <p>
+                    **Formal Training & Early Hustle:** Established the theoretical knowledge base necessary to even land the Adobe role. The perfect starting point for any career transformation.
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Call to Action -->
+        <div class="cta-section">
+            <h2>This Course is the Shortcut.</h2>
+            <p>Ready to skip the years of struggle and get straight to success?</p>
+            <a href="#enrollment" class="cta-button">Enroll & Accelerate Your Career Now</a>
+        </div>
+
     </div>
 </body>
 </html>
